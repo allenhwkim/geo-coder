@@ -2,7 +2,11 @@ import {GeoCoder} from 'geocoder';
 
 export default class Main {
   constructor() {
-    alert('Typescript Webpack starter launched' + GeoCoder);
+    let geoCoder = new GeoCoder();
+    geoCoder.geocode('8200 dixie road').then((result: any[]) => {
+      result.map(addr => console.log(addr.original.formatted));
+    })
+
   }
 }
 

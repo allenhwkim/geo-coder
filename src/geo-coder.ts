@@ -7,6 +7,7 @@ export class GeoCoder {
 
   constructor(options?: any) {
     this.options = options || {};
+    this.options.provider = this.options.provider || 'osm';
     switch(this.options.provider.toLowerCase()) {
       case 'photon':   this.provider =  new provider.Photon(); break;
       case 'osm':      this.provider =  new provider.OpenStreet(); break;
@@ -14,12 +15,11 @@ export class GeoCoder {
       case 'pelias':   this.provider =  new provider.Pelias(); break;
       case 'bing':     this.provider =  new provider.Bing(); break;
       case 'google':   this.provider =  new provider.Google(); break;
-      default: this.provider =  new provider.OpenStreet(); break;
     }
   }
 
   geocode(address) {
-    const provider = this.provider.getParameter({
+    const provider = this.provider.getParameters({
       query: address,
       provider: this.options.provider,
       key: this.options.key,
@@ -28,14 +28,15 @@ export class GeoCoder {
       limit: this.options.limit
     });
 
-    return qwest.get(provider.url, provider.params)
-      .then(function(xhr, response) {
-        console.log('response', response);
-        return this.provider.handleResponse(response);
-      })
-      .catch(function(e, xhr, response) {
-        throw e;
-      });
+    return new Promise( (resolve, reject)  => {
+      qwest.get(provider.url, provider.params)
+        .then((xhr, response) => {
+          resolve(this.provider.handleResponse(response));
+        })
+        .catch((e, xhr, response) => {
+          reject(e);
+        });
+    })
   }
 
 }
