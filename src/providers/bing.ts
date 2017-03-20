@@ -2,18 +2,27 @@
  * @class Bing
  */
 export class Bing {
+  options: any; 
 
-  getParameters(options) {
+  constructor(options) {
+    this.options = options || {};
+  }
+
+  getParameters(address) {
     return {
       url: 'https://dev.virtualearth.net/REST/v1/Locations',
       callbackName: 'jsonp',
       params: {
-        query: options.query,
-        key: options.key,
-        includeNeighborhood: options.includeNeighborhood || 0,
-        maxResults: options.maxResults || 10
+        query: address,
+        key: this.options.key,
+        includeNeighborhood: this.options.includeNeighborhood || 0,
+        maxResults: this.options.maxResults || 10
       }
     };
+  }
+
+  getReverseGeolookupParameters(lat, lon) {
+   //http://dev.virtualearth.net/REST/v1/Locations/point?includeEntityTypes=entityTypes&includeNeighborhood=includeNeighborhood&include=includeValue&key=BingMapsKey
   }
 
   handleResponse(results) {
@@ -25,10 +34,8 @@ export class Bing {
         address: {
           name: result.name
         },
-        original: {
-          formatted: result.address.formattedAddress,
-          details: result.address
-        }
+        formatted: result.address.formattedAddress,
+        raw: result
       }));
     } else {
       return undefined;

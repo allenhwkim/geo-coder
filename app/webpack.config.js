@@ -23,7 +23,8 @@ const config = {
           }
         ],
       },
-      { test: /\.html$/, use: ['raw-loader'] }
+      { test: /\.html$/, use: ['raw-loader'] },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
     ]
   },
   plugins: [],

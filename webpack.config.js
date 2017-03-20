@@ -23,10 +23,8 @@ var config = {
   devtool: 'source-map',
   module: {
     rules: [
-      { // Support for .ts files.
-        test: /\.ts$/,
-        use: ['ts-loader']
-      }
+      { test: /\.ts$/, use: ['ts-loader'] }, // Support for .ts files.
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
     ]
   }
 };

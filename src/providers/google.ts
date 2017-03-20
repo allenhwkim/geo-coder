@@ -23,13 +23,19 @@ function anyItemHasValue(obj, has = false) {
 
 export class Google {
 
-  getParameters(options) {
+  options: any; 
+  
+  constructor(options) {
+    this.options = options || {};
+  }
+
+  getParameters(address) {
     return {
       url: 'https://maps.googleapis.com/maps/api/geocode/json',
       params: {
-        address: options.query,
-        key: options.key,
-        language: options.lang || 'en-US'
+        address: address,
+        key: this.options.key,
+        language: this.options.lang || 'en-US'
       }
     };
   }
@@ -79,16 +85,14 @@ export class Google {
             lat: result.geometry.location.lat,
             address: {
               name: details.name,
-              postcode: details.postcode,
+              postalCode: details.postcode,
               road: details.road,
               city: details.city,
               state: details.state,
               country: details.country
             },
-            original: {
-              formatted: result.formatted_address,
-              details: result.address_components
-            }
+            formatted: result.formatted_address,
+            raw: result
           });
         }
       });
@@ -99,4 +103,22 @@ export class Google {
     }
 
   }
+
+  getReverseGeolookupParameters(lat, lon) {
+    //geocoder.geocode({'location': latlng}, function(results, status) {
+    //if (status === 'OK') {
+    //  if (results[1]) {
+    //    map.setZoom(11);
+    //    var marker = new google.maps.Marker({
+    //      position: latlng,
+    //      map: map
+    //    });
+    //    infowindow.setContent(results[1].formatted_address);
+    //    infowindow.open(map, marker);
+    //  } else {
+    //    window.alert('No results found');
+    //  }
+    //}
+  }
+
 }
