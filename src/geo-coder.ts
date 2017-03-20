@@ -17,16 +17,11 @@ export class GeoCoder {
   }
 
   geocode(address) {
-    let params = this.provider.getParameters(address);
-    return new Promise( (resolve, reject)  => {
-      qwest.get(params.url, params.params)
-        .then((xhr, response) => {
-          resolve(this.provider.handleResponse(response));
-        })
-        .catch((e, xhr, response) => {
-          reject(e);
-        });
-    })
+    return this.provider.geolookup(address);
+  }
+
+  reverse(lat, lon) {
+    return this.provider.reverse(lat, lon);
   }
 
   autocomplete(inputEl) {
@@ -56,11 +51,6 @@ export class GeoCoder {
         })
       });
     })
-  }
-
-  reverse(lat, lng) {
-    return new Promise((resolve, reject) => {
-    });
   }
 
 }

@@ -1,11 +1,14 @@
 import {GeoCoder} from 'geocoder';
 
+var changeEvent = new Event('change');
+
 export default class Main {
   geoCoder: GeoCoder;
   constructor() {
     this.geoCoder = new GeoCoder();
     this.geocode();
     this.autocomplete();
+    this.reverseLookup();
   }
 
   geocode() {
@@ -17,6 +20,7 @@ export default class Main {
         resultEl.value = JSON.stringify(result, null, '  ');
       })
     })
+    inputEl.dispatchEvent(changeEvent);
   }
 
   autocomplete() {
@@ -29,6 +33,21 @@ export default class Main {
   }
 
   reverseLookup() {
+    let latEl = document.querySelector('#reverse .lat');
+    let lonEl = document.querySelector('#reverse .lon');
+    let resultEl: HTMLTextAreaElement = 
+      <any>document.querySelector('#reverse .result');
+
+    let reverseHandler = event => {
+      let lat = parseFloat((<HTMLInputElement>latEl).value || '0');
+      let lon = parseFloat((<HTMLInputElement>lonEl).value || '0');
+      this.geoCoder.reverse(lat, lon).then(result => {
+        resultEl.value = JSON.stringify(result, null, '  ');
+      })
+    }
+    latEl.addEventListener('change', reverseHandler);
+    lonEl.addEventListener('change', reverseHandler);
+    latEl.dispatchEvent(changeEvent);
   }
 }
 
