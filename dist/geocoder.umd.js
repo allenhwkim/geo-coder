@@ -136,9 +136,15 @@ var GeoCoder = (function () {
     };
     GeoCoder.prototype.autocomplete = function (inputEl) {
         var _this = this;
-        var listEl = document.createElement('ul');
-        listEl.className = 'geocode-autocomplete';
-        inputEl.parentNode.insertBefore(listEl, inputEl.nextSibling);
+        var listEl;
+        if (inputEl.nextSibling.className == 'geocode-autocomplete') {
+            listEl = inputEl.nextSibling;
+        }
+        else {
+            listEl = document.createElement('ul');
+            listEl.className = 'geocode-autocomplete';
+            inputEl.parentNode.insertBefore(listEl, inputEl.nextSibling);
+        }
         inputEl.addEventListener('keyup', function (event) {
             listEl.style.display = '';
             while (listEl.firstChild) {

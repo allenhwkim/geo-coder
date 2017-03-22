@@ -25,9 +25,14 @@ export class GeoCoder {
   }
 
   autocomplete(inputEl) {
-    let listEl = document.createElement('ul');
-    listEl.className = 'geocode-autocomplete';
-    inputEl.parentNode.insertBefore(listEl, inputEl.nextSibling);
+    let listEl:any;
+    if (inputEl.nextSibling.className == 'geocode-autocomplete') {
+      listEl = inputEl.nextSibling;
+    } else {
+      listEl = document.createElement('ul');
+      listEl.className = 'geocode-autocomplete';
+      inputEl.parentNode.insertBefore(listEl, inputEl.nextSibling);
+    }
     inputEl.addEventListener('keyup', event => {
       listEl.style.display = '';
       while (listEl.firstChild) {

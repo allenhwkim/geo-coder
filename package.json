@@ -1,6 +1,6 @@
 {
   "name": "geo-coder",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
   "license": "MIT",
   "main": "dist/geocoder.umd.js",
