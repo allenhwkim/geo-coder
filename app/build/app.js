@@ -3013,7 +3013,6 @@ var Main = (function () {
         console.log('geoCoderOptions', geoCoderOptions);
         this.geoCoder = new geocoder_1.GeoCoder(geoCoderOptions);
         //this.geoCoder = new GeoCoder();
-        console.log('set..................provider');
         this.geocode();
         this.autocomplete();
         this.reverseLookup();

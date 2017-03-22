@@ -24,7 +24,6 @@ export default class Main {
     console.log('geoCoderOptions', geoCoderOptions);
     this.geoCoder = new GeoCoder(geoCoderOptions);
     //this.geoCoder = new GeoCoder();
-    console.log('set..................provider')
     this.geocode();
     this.autocomplete();
     this.reverseLookup();
