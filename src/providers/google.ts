@@ -1,3 +1,4 @@
+import {serialize} from './index';
 
 /**
  * @class Google
@@ -9,6 +10,9 @@ const city = ['locality'];
 const state = ['administrative_area_level_1'];
 const country = ['country'];
 
+function isEmpty(str) {
+  return (!str || 0 === str.length);
+}
 function anyMatchInArray(source, target) {
   return source.some(each => target.indexOf(each) >= 0);
 }
@@ -16,7 +20,7 @@ function anyMatchInArray(source, target) {
 function anyItemHasValue(obj, has = false) {
   const keys = Object.keys(obj);
   keys.forEach(key => {
-    if (!this.isEmpty(obj[key])) has = true;
+    if (!isEmpty(obj[key])) has = true;
   });
   return has;
 }
@@ -29,22 +33,42 @@ export class Google {
     this.options = options || {};
   }
 
-  getParameters(address) {
-    return {
-      url: 'https://maps.googleapis.com/maps/api/geocode/json',
-      params: {
-        address: address,
-        key: this.options.key,
-        language: this.options.lang || 'en-US'
-      }
+  geolookup(address) {
+    let url: string = 'https://maps.googleapis.com/maps/api/geocode/json';
+    let params: any = {
+      address: address,
+      key: this.options.key,
+      language: this.options.lang || 'en-US'
     };
+    url = `${url}?${serialize(params)}`
+
+    return fetch(url)
+      .then(resp => resp.json())
+      .then(json => this._handleResponse(json))
   }
 
-  handleResponse(results) {
-    results = results.results && results.results.length ? results.results : undefined;
-    if (results.results && results.results.length ) {
-      results = results.results;
+  reverse(lat, lon) {
+    let url: string = 'https://maps.googleapis.com/maps/api/geocode/json';
+    let params: any = {
+      latlng: `${lat},${lon}`,
+      key: this.options.key,
+      language: this.options.lang || 'en-US'
+    };
 
+    return fetch(`${url}?${serialize(params)}`)
+      .then(resp => resp.json())
+      .then(json => {
+        return {
+          source: 'Google',
+          address: json['results'][0]['formatted_address'],
+          raw: json
+        }
+      })
+  }
+
+  private _handleResponse(json) {
+    let results = json.results && json.results.length ? json.results : undefined;
+    if (results) {
       /*
        * @param {Array} details - address_components
        */
@@ -81,6 +105,7 @@ export class Google {
         let details = getDetails(result.address_components);
         if (anyItemHasValue(details)) {
           array.push({
+            source: 'Google',
             lon: result.geometry.location.lng,
             lat: result.geometry.location.lat,
             address: {
@@ -102,23 +127,6 @@ export class Google {
       return undefined;
     }
 
-  }
-
-  getReverseGeolookupParameters(lat, lon) {
-    //geocoder.geocode({'location': latlng}, function(results, status) {
-    //if (status === 'OK') {
-    //  if (results[1]) {
-    //    map.setZoom(11);
-    //    var marker = new google.maps.Marker({
-    //      position: latlng,
-    //      map: map
-    //    });
-    //    infowindow.setContent(results[1].formatted_address);
-    //    infowindow.open(map, marker);
-    //  } else {
-    //    window.alert('No results found');
-    //  }
-    //}
   }
 
 }

@@ -33,6 +33,7 @@
     "codelyzer": "^2.0.1",
     "core-js": "^2.4.1",
     "css-loader": "^0.27.3",
+    "fetch-jsonp": "^1.0.6",
     "forever": "^0.15.3",
     "fs-extra": "^2.0.0",
     "ng2-utils": "^0.6.1",

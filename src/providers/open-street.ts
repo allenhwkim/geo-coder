@@ -27,6 +27,7 @@ export class OpenStreet {
       .then(json => 
         json['map'](result => {
           return {
+            source: 'OpenStreetMap',
             lon: result.lon,
             lat: result.lat,
             address: {
@@ -60,6 +61,7 @@ export class OpenStreet {
       .then(resp => resp.json())
       .then(json => {
           return {
+            source: 'OpenStreetMap',
             address: json['display_name'],
             raw: json
           }

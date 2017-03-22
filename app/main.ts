@@ -3,9 +3,28 @@ import {GeoCoder} from 'geocoder';
 var changeEvent = new Event('change');
 
 export default class Main {
+  providerName: string = 'osm';
+  providerApiKeys: any = {
+    'google': 'AIzaSyCXSoZnw0psVN4GShGR4NRcWDIFjTK_iOk',
+    'bing':   'AjOGMGb_zZWTtds4MsziENAMwak-L3JM78vIfyI9oDDYtw7tk5-kHHJyLfy8CUjo'
+  } ;
   geoCoder: GeoCoder;
+
   constructor() {
-    this.geoCoder = new GeoCoder();
+    let selectEl = document.querySelector('#provider');
+    this.setProvider(selectEl['value']);
+    selectEl.addEventListener('change', e => this.setProvider(e.target['value']) );
+  }
+
+  setProvider(providerName: string = 'osm') {
+    let geoCoderOptions = {provider: providerName};
+    if (this.providerApiKeys[providerName]) {
+      geoCoderOptions['key'] = this.providerApiKeys[providerName];
+    }
+    console.log('geoCoderOptions', geoCoderOptions);
+    this.geoCoder = new GeoCoder(geoCoderOptions);
+    //this.geoCoder = new GeoCoder();
+    console.log('set..................provider')
     this.geocode();
     this.autocomplete();
     this.reverseLookup();
