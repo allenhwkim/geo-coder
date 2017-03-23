@@ -28,8 +28,8 @@ export class OpenStreet {
         json['map'](result => {
           return {
             source: 'OpenStreetMap',
-            lon: result.lon,
-            lat: result.lat,
+            lon: parseFloat(result.lon),
+            lat: parseFloat(result.lat),
             address: {
               name: result.address.neighbourhood || '',
               road: result.address.road || '',

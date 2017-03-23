@@ -2031,7 +2031,7 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, ".geocode-autocomplete {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #333;\n  margin: 0;\n  list-style: none;\n  padding: 0;\n  max-height: 200px;\n  overflow: scroll; \n}\n.geocode-autocomplete li {\n  padding: 2px 10px;\n  pointer: cursor;\n}\n.geocode-autocomplete li:nth-child(even) {\n  background-color: #eee\n}\n.geocode-autocomplete li:hover {\n   background-color: #ccc;\n}\n", ""]);
+exports.push([module.i, ".geocode-autocomplete {\n  position: absolute;\n  background: #fff;\n  border: 1px solid #333;\n  margin: 0;\n  list-style: none;\n  padding: 0;\n  max-height: 200px;\n  overflow: auto; \n}\n.geocode-autocomplete li {\n  padding: 2px 10px;\n  pointer: cursor;\n}\n.geocode-autocomplete li:nth-child(even) {\n  background-color: #eee\n}\n.geocode-autocomplete li:hover {\n   background-color: #ccc;\n}\n", ""]);
 
 // exports
 
@@ -2625,7 +2625,7 @@ var GeoCoder = (function () {
     GeoCoder.prototype.autocomplete = function (inputEl) {
         var _this = this;
         var listEl;
-        if (inputEl.nextSibling.className == 'geocode-autocomplete') {
+        if (inputEl.nextSibling && inputEl.nextSibling.className == 'geocode-autocomplete') {
             listEl = inputEl.nextSibling;
         }
         else {
@@ -2712,8 +2712,8 @@ var Bing = (function () {
                 return results.map(function (result) {
                     return {
                         source: 'Bing',
-                        lon: result.point.coordinates[1],
-                        lat: result.point.coordinates[0],
+                        lon: parseFloat(result.point.coordinates[1]),
+                        lat: parseFloat(result.point.coordinates[0]),
                         address: {
                             name: result.name
                         },
@@ -2862,8 +2862,8 @@ var Google = (function () {
                 if (anyItemHasValue(details)) {
                     array_1.push({
                         source: 'Google',
-                        lon: result.geometry.location.lng,
-                        lat: result.geometry.location.lat,
+                        lon: parseFloat(result.geometry.location.lng),
+                        lat: parseFloat(result.geometry.location.lat),
                         address: {
                             name: details.name,
                             postalCode: details.postcode,
@@ -2920,8 +2920,8 @@ var OpenStreet = (function () {
             return json['map'](function (result) {
                 return {
                     source: 'OpenStreetMap',
-                    lon: result.lon,
-                    lat: result.lat,
+                    lon: parseFloat(result.lon),
+                    lat: parseFloat(result.lat),
                     address: {
                         name: result.address.neighbourhood || '',
                         road: result.address.road || '',

@@ -1,13 +1,13 @@
 {
   "name": "geo-coder",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
   "license": "MIT",
   "main": "dist/geocoder.umd.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "set NODE_ENV=dev && webpack-dev-server --quiet --port 9001 --content-base app --config app/webpack.config --open",
+    "start": "set NODE_ENV=dev && webpack-dev-server --quiet --port 9019 --content-base app --config app/webpack.config --open",
     "clean": "rimraf dist",
     "build": "npm-run-all --serial clean build:umd build:app",
     "build:umd": "set NODE_ENV=prod && webpack",

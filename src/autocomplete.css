@@ -6,7 +6,7 @@
   list-style: none;
   padding: 0;
   max-height: 200px;
-  overflow: scroll; 
+  overflow: auto; 
 }
 .geocode-autocomplete li {
   padding: 2px 10px;

@@ -106,8 +106,8 @@ export class Google {
         if (anyItemHasValue(details)) {
           array.push({
             source: 'Google',
-            lon: result.geometry.location.lng,
-            lat: result.geometry.location.lat,
+            lon: parseFloat(result.geometry.location.lng),
+            lat: parseFloat(result.geometry.location.lat),
             address: {
               name: details.name,
               postalCode: details.postcode,

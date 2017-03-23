@@ -49,8 +49,8 @@ export class Bing {
         return results.map(result => {
           return {
             source: 'Bing',
-            lon: result.point.coordinates[1],
-            lat: result.point.coordinates[0],
+            lon: parseFloat(result.point.coordinates[1]),
+            lat: parseFloat(result.point.coordinates[0]),
             address: {
               name: result.name
             },
