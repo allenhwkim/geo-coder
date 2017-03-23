@@ -26,7 +26,7 @@ export class GeoCoder {
 
   autocomplete(inputEl) {
     let listEl:any;
-    if (inputEl.nextSibling.className == 'geocode-autocomplete') {
+    if (inputEl.nextSibling && inputEl.nextSibling.className == 'geocode-autocomplete') {
       listEl = inputEl.nextSibling;
     } else {
       listEl = document.createElement('ul');
