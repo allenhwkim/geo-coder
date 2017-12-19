@@ -1,18 +1,15 @@
-import {serialize} from './index';
-/**
- * @class OpenStreet
- */
+import {serialize} from './util.js';
+import {fetch} from 'whatwg-fetch';
 
 export class OpenStreet {
-  options: any; 
   
   constructor(options) {
     this.options = options || {};
   }
 
   geolookup(address) {
-    let url: string = 'https://nominatim.openstreetmap.org/search/';
-    let params: any = {
+    let url = 'https://nominatim.openstreetmap.org/search/';
+    let params = {
       q: address,
       format: 'json',
       addressdetails: 1,
@@ -28,7 +25,7 @@ export class OpenStreet {
         json['map'](result => {
           return {
             source: 'OpenStreetMap',
-            lon: parseFloat(result.lon),
+            lng: parseFloat(result.lon),
             lat: parseFloat(result.lat),
             address: {
               name: result.address.neighbourhood || '',
@@ -45,12 +42,12 @@ export class OpenStreet {
       );
   }
 
-  reverse(lat, lon) {
-    let url: string = 'https://nominatim.openstreetmap.org/reverse';
-    let params: any = {
+  reverse(lat, lng) {
+    let url = 'https://nominatim.openstreetmap.org/reverse';
+    let params = {
       format: 'json',
       lat: lat,
-      lon: lon,
+      lon: lng,
       zoom: this.options.zoom || 18,
       addressdetails: this.options.addressdetail || 1,
       'accept-language': this.options.lang || 'en-US'

@@ -1,1 +1,0 @@
-export {GeoCoder} from './geo-coder';
