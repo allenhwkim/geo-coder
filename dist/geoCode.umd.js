@@ -146,7 +146,7 @@ var GeoCode = exports.GeoCode = function () {
   return GeoCode;
 }();
 
-window && (window.GeoCode = GeoCode);
+typeof window !== 'undefined' && (window.GeoCode = GeoCode);
 
 /***/ }),
 /* 2 */

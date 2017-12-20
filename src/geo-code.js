@@ -23,4 +23,4 @@ export class GeoCode {
   }
 
 }
-window && (window.GeoCode = GeoCode);
+(typeof window !== 'undefined') && (window.GeoCode = GeoCode);
