@@ -3,54 +3,57 @@ Geocoder
 ---------
 address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing
 
-[![image](https://cloud.githubusercontent.com/assets/1437734/24178224/32744238-0e7e-11e7-9806-ce0ffddd9218.png)](https://rawgit.com/allenhwkim/geocoder/master/app/index.html)
+* Small size(2.3K min/gzipped)
+* Working on NodeJS and Browser
 
-Installation
-=============
+[Documentation](API.md)
+[Example](test/test.html)
+## NodeJS Usage
 
-    npm install geo-coder
+### Install
+    npm install geo-coder --save-dev
 
-Getting Started
-===============
-First instantiate GeoCoder object with provider information
+### Example
+    global.fetch = require('node-fetch');   // set fetch for nodeJS
+    var GeoCode = require('geo-coder').GeoCode;
 
-Example
-```
-  var geoCoder = new GeoCoder({
-    provider: 'google',  // 'osm', or 'bing'
-    key: MY_GOOGLE_API_KEY
-  });
-```
+    var geoCode = new GeoCode();
 
-Geocoding Example
-=================
-```
-  geoCoder.geocode('Brampton, Ontario').then(result => {
-    console.log('geo lookup result', result);
-  })
-```
+    // geolookup example
+    geocode.geolookup('Brampton, Canada').then(result => {
+      console.log(result))  //  [ { source: 'OpenStreetMap', lng: -79.752502, lat: 43.715783,..}]
+    });
+    
+    // reverse lookup example
+    geocode.reverse(43.653226, -79.3831843).then(result => {
+      console.log(result) // {source: 'OpenStreetMap', address: 'Brampton, ON'...}
+    });
+    
+## Browser Usage
 
-Autocomplete Example
-====================
-```
-  let inputEl = document.querySelector('#autocomplete .address');
-  geoCoder.autocomplete(inputEl);
-  inputEl.addEventListener('place_changed', (event: any) => {
-    console.log('autocomplete result', evnt);
-  })
-```
-Reverse Lookup Example
-======================
-```
-  geoCoder.reverse(43.653226, -79.3831843).then(result => {
-    console.log('reverse lookup result', result);
-  })
-```
+### Install
+Add the library
 
-Providers
-==========
-* Google (api key required)
-* Bing (api key required)
-* OpenStreet
+    <script src="https://unpkg.com/geo-coder"></script>
 
+### Example
+
+    var geoCode = new GeoCode();
+
+    // geolookup example
+    geoCode.geolookup('Brampton, Canada').then(result => {
+      console.log(result);
+    });
+
+    // reverse lookup example
+    geoCode.reverse(43.653226, -79.3831843).then(result => {
+      console.log(result);
+    });
+
+## NOTE
+an api key is required to use Google
+https://developers.google.com/maps/documentation/javascript/get-api-key
+
+or Bing map.
+https://msdn.microsoft.com/en-us/library/ff428642.aspx
 

@@ -1,55 +1,71 @@
 {
   "name": "geo-coder",
-  "version": "0.2.1",
+  "version": "1.0.2",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
-  "license": "MIT",
-  "main": "dist/geocoder.umd.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/geoCode.umd.min.js",
+  "module": "src/geo-code.js",
   "scripts": {
-    "start": "set NODE_ENV=dev && webpack-dev-server --quiet --port 9019 --content-base app --config app/webpack.config --open",
-    "clean": "rimraf dist",
-    "build": "npm-run-all --serial clean build:umd build:app",
-    "build:umd": "set NODE_ENV=prod && webpack",
-    "build:app": "set NODE_ENV=prod && webpack --config app/webpack.config"
+    "webpack": "webpack",
+    "clean": "rm -rf dist && mkdir dist",
+    "min-js": "uglifyjs dist/geoCode.umd.js -c > dist/geoCode.umd.min.js",
+    "build": "npm-run-all clean webpack min-js",
+    "doc": "jsdoc2md src/*.js src/*/*.js > API.md",
+    "build-and-publish": "npm run build && npm version patch && npm publish --access=public",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allenhwkim/geocoder.git"
+    "url": "git+https://github.com/allenhwkim/geo-code.git"
   },
-  "author": "Allen Kim<allenhwkim@gmail.com>",
   "bugs": {
-    "url": "https://github.com/allenhwkim/geocoder/issues"
+    "url": "https://github.com/allenhwkim/geo-code/issues"
   },
-  "homepage": "https://github.com/allenhwkim/geocoder#readme",
+  "homepage": "https://github.com/allenhwkim/geo-code#readme",
   "keywords": [
     "google",
+    "address",
+    "geocode",
     "bing",
     "OpenStreet",
     "map"
   ],
+  "files": [
+    "dist",
+    "src"
+  ],
   "devDependencies": {
-    "@types/googlemaps": "^3.26.4",
-    "@types/node": "^7.0.8",
-    "codelyzer": "^2.0.1",
-    "core-js": "^2.4.1",
-    "css-loader": "^0.27.3",
-    "fetch-jsonp": "^1.0.6",
-    "forever": "^0.15.3",
-    "fs-extra": "^2.0.0",
-    "ng2-utils": "^0.6.1",
-    "npm-run-all": "^4.0.2",
-    "qwest": "^4.4.5",
-    "raw-loader": "^0.5.1",
-    "rimraf": "^2.6.1",
-    "rxjs": "^5.2.0",
-    "strip-loader": "^0.1.2",
-    "style-loader": "^0.14.1",
-    "ts-loader": "^2.0.1",
-    "typescript": "2.2.1",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
-    "webtest": "^0.3.8",
-    "zone.js": "^0.8.0"
-  }
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "jest": "^22.0.3",
+    "jsdoc-to-markdown": "3.0.2",
+    "node-fetch": "^1.7.3",
+    "npm-run-all": "^4.1.1",
+    "regenerator-runtime": "^0.11.1",
+    "uglify-es": "3.1.7",
+    "uglify-js": "^3.2.2",
+    "uglifycss": "0.0.27",
+    "webpack": "^3.8.1"
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-es2015",
+      "babel-preset-es2016",
+      "babel-preset-es2017"
+    ]
+  },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
+  },
+  "dependencies": {
+    "node-fetch": "^1.7.3"
+  },
+  "author": "Allen Kim<allenhwkim@gmail.com>",
+  "license": "MIT"
 }
