@@ -2,6 +2,9 @@ Geocoder
 ---------
 address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing
 
+* Small size(2.3K min/gzipped)
+* Working on NodeJS and Browser
+
 ## NodeJS Usage
 
 ### Install

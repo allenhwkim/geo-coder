@@ -23,3 +23,4 @@ export class GeoCode {
   }
 
 }
+window && (window.GeoCode = GeoCode);

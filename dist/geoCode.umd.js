@@ -146,6 +146,8 @@ var GeoCode = exports.GeoCode = function () {
   return GeoCode;
 }();
 
+window && (window.GeoCode = GeoCode);
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
