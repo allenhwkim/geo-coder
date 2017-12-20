@@ -3,15 +3,15 @@
   "version": "0.2.1",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
   "license": "MIT",
-  "main": "dist/geocoder.umd.js",
+  "main": "dist/geoCode.umd.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "webpack": "webpack",
     "clean": "rm -rf dist && mkdir dist",
-    "min-js": "uglifyjs dist/main.js -m reserved=[List] -c > dist/main.min.js",
+    "min-js": "uglifyjs dist/geoCode.umd.js -m reserved=[List] -c > dist/geoCode.umd.min.js",
     "build": "npm-run-all clean webpack min-js",
-    "doc": "jsdoc2md main.js > DOC-GENERATED.md",
+    "doc": "jsdoc2md src/**/*.js > DOC-GENERATED.md",
     "build-and-publish": "npm run build && npm version patch && npm publish --access=public",
     "test": "jest"
   },
@@ -24,11 +24,17 @@
     "url": "https://github.com/allenhwkim/geo-code/issues"
   },
   "homepage": "https://github.com/allenhwkim/geo-code#readme",
-  "keywords": ["google", "address", "geocode", "bing", "OpenStreet", "map"],
-  "files": ["dist"],
-  "peerDependencies": {
-    "whatwg-fetch": "2.0.3"
-  },
+  "keywords": [
+    "google",
+    "address",
+    "geocode",
+    "bing",
+    "OpenStreet",
+    "map"
+  ],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^22.0.3",
@@ -42,7 +48,8 @@
     "regenerator-runtime": "^0.11.1",
     "uglify-es": "3.1.7",
     "uglifycss": "0.0.27",
-    "webpack": "3.8.1"
+    "webpack": "^3.8.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "babel": {
     "presets": [
@@ -50,5 +57,8 @@
       "babel-preset-es2016",
       "babel-preset-es2017"
     ]
+  },
+  "dependencies": {
+    "node-fetch": "^1.7.3"
   }
 }
