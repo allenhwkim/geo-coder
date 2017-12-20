@@ -8,11 +8,11 @@ address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing
 ## NodeJS Usage
 
 ### Install
-    npm install geo-code --save-dev
+    npm install geo-coder --save-dev
 
 ### Example
     global.fetch = require('node-fetch');   // set fetch for nodeJS
-    var geoCode = new require('./dist/geoCode.umd.min.js').GeoCode();
+    var geoCode = new require('geo-coder').GeoCode();
 
     // geolookup example
     geocode.geolookup('Brampton, Canada').then(result => {

@@ -1,5 +1,5 @@
 {
-  "name": "geo-code",
+  "name": "geo-coder",
   "version": "1.0.1",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
   "main": "dist/geoCode.umd.min.js",
