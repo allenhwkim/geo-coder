@@ -1,5 +1,5 @@
 import {serialize, jsonp} from './util.js';
-import {fetch} from 'whatwg-fetch';
+import 'whatwg-fetch';
 
 /**
  * Bing geolookup / reverse lookup
@@ -35,38 +35,29 @@ export class Bing {
     return fetch(`${url}?${serialize(params)}`)
       .then(resp => resp.json())
       .then(json => {
-        try {
-          let address = json['resourceSets'][0]['resources'][0]['name'];
-          return {
-            source: 'Bing',
-            address: address,
-            raw: json
-          };
-        } catch(e) {
-          console.log('e', e);
-          return undefined;
-        }
+        let address = json['resourceSets'][0]['resources'][0]['name'];
+        return {
+          source: 'Bing',
+          address: address,
+          raw: json
+        };
       });
   }
 
   _handleResponse(json) {
-    try {
-      let results = json['resourceSets'][0]['resources'];
-      return results.map(result => {
-        return {
-          source: 'Bing',
-          lng: parseFloat(result.point.coordinates[1]),
-          lat: parseFloat(result.point.coordinates[0]),
-          address: {
-            name: result.name
-          },
-          formatted: result.address.formattedAddress,
-          raw: result
-        };
-      });
-    } catch(e) {
-      return undefined; 
-    }
+    let results = json['resourceSets'][0]['resources'];
+    return results.map(result => {
+      return {
+        source: 'Bing',
+        lng: parseFloat(result.point.coordinates[1]),
+        lat: parseFloat(result.point.coordinates[0]),
+        address: {
+          name: result.name
+        },
+        formatted: result.address.formattedAddress,
+        raw: result
+      };
+    });
   }
 
 }

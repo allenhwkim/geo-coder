@@ -1,5 +1,5 @@
 import {serialize} from './util.js';
-import {fetch} from 'whatwg-fetch';
+import 'whatwg-fetch';
 
 export class OpenStreet {
   

@@ -1,5 +1,5 @@
 import {serialize} from './util.js';
-import {fetch} from 'whatwg-fetch';
+import 'whatwg-fetch';
 
 export class Google {
 
@@ -101,7 +101,7 @@ export class Google {
 
       return array;
     } else {
-      return undefined;
+      throw "Invalid response" + json;
     }
 
   }
