@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/geo-coder"></script>
+  </head>
+  <body>
+    <h1>Geo-Coder Test</h1>
+    <h3> Enter lat/lng:</h3>
+    <input id="latlng" onchange="findAddress(this)" value="43.684310, -79.758720">
+
+    <h3>Enter address:</h3>
+    <input id="latlng" value="Brampton, On" onchange="findLatLng(this)">
+
+    <h3>Output</h3>
+    <pre id="output"></pre>
+
+    <script>
+      var geoCode = new GeoCode();
+      var output = document.querySelector('#output');
+
+      function findAddress(el) {
+        let [lat, lng] = el.value.split(',').map(el => el.trim());
+        geoCode.reverse(lat,lng).then(result => {
+          output.innerHTML = JSON.stringify(result, null, '  ');
+        });
+      }
+
+      function findLatLng(el) {
+        geoCode.geolookup(el.value).then(result => {
+          output.innerHTML = JSON.stringify(result, null, '  ');
+        });
+      }
+    </script>
+  </body>
+</html>
