@@ -3,11 +3,14 @@ Geocoder
 ---------
 address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing
 
+[![Build Status](https://travis-ci.org/allenhwkim/geo-coder.svg?branch=master)](https://travis-ci.org/allenhwkim/geo-coder)
+
 * Small size(2.3K min/gzipped)
 * Working on NodeJS and Browser
 
-[Documentation](API.md)
-[Example](test/test.html)
+[Documentation](API.md)  
+[Example](https://rawgit.com/allenhwkim/geo-coder/master/test/test.html)
+
 ## NodeJS Usage
 
 ### Install

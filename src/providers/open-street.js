@@ -28,7 +28,7 @@ export class OpenStreet {
 
     return fetch(url)
       .then(resp => resp.json())
-      .then(json => this._handleResponse())
+      .then(json => this._handleResponse(json))
   }
 
   /**
