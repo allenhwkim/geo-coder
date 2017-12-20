@@ -1,5 +1,4 @@
 import {serialize, jsonp} from './util.js';
-import 'whatwg-fetch';
 
 /**
  * Bing geolookup / reverse lookup

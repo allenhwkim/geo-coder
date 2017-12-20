@@ -1,5 +1,4 @@
 import {serialize} from './util.js';
-import 'whatwg-fetch';
 
 export class Google {
 

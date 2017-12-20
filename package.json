@@ -1,15 +1,13 @@
 {
   "name": "geo-code",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
-  "license": "MIT",
-  "main": "dist/geoCode.umd.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/geoCode.umd.minj.s",
+  "module": "src/geo-code.js",
   "scripts": {
     "webpack": "webpack",
     "clean": "rm -rf dist && mkdir dist",
-    "min-js": "uglifyjs dist/geoCode.umd.js -m reserved=[List] -c > dist/geoCode.umd.min.js",
+    "min-js": "uglifyjs dist/geoCode.umd.js -c > dist/geoCode.umd.min.js",
     "build": "npm-run-all clean webpack min-js",
     "doc": "jsdoc2md src/**/*.js > DOC-GENERATED.md",
     "build-and-publish": "npm run build && npm version patch && npm publish --access=public",
@@ -19,7 +17,6 @@
     "type": "git",
     "url": "git+https://github.com/allenhwkim/geo-code.git"
   },
-  "author": "Allen Kim<allenhwkim@gmail.com>",
   "bugs": {
     "url": "https://github.com/allenhwkim/geo-code/issues"
   },
@@ -38,6 +35,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^22.0.3",
+    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-es2017": "^6.24.1",
@@ -47,9 +45,9 @@
     "npm-run-all": "4.1.1",
     "regenerator-runtime": "^0.11.1",
     "uglify-es": "3.1.7",
+    "uglify-js": "^3.2.2",
     "uglifycss": "0.0.27",
-    "webpack": "^3.8.1",
-    "whatwg-fetch": "^2.0.3"
+    "webpack": "^3.8.1"
   },
   "babel": {
     "presets": [
@@ -58,7 +56,15 @@
       "babel-preset-es2017"
     ]
   },
+  "jest" :{
+    "verbose": true,
+    "setupFiles": [
+      "./jest-setup.js"
+    ]
+  },
   "dependencies": {
     "node-fetch": "^1.7.3"
-  }
+  },
+  "author": "Allen Kim<allenhwkim@gmail.com>",
+  "license": "MIT"
 }

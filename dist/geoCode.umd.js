@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("whatwg-fetch"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(["whatwg-fetch"], factory);
+		define([], factory);
 	else if(typeof exports === 'object')
-		exports["geoCode"] = factory(require("whatwg-fetch"));
+		exports["geoCode"] = factory();
 	else
-		root["geoCode"] = factory(root["whatwg-fetch"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+		root["geoCode"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -70,304 +70,356 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = serialize;
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.serialize = serialize;
 function serialize(obj) {
   var str = [];
-  for(var p in obj)
+  for (var p in obj) {
     if (obj.hasOwnProperty(p)) {
       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
-  return str.join("&");
+  }return str.join("&");
 }
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoCode = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _bing = __webpack_require__(2);
+
+var _google = __webpack_require__(3);
+
+var _openStreet = __webpack_require__(4);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GeoCode = exports.GeoCode = function () {
+  function GeoCode() {
+    var provider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'osm';
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, GeoCode);
+
+    this.provider = provider;
+    this.options = options;
+    this.klasses = { osm: _openStreet.OpenStreet, bing: _bing.Bing, google: _google.Google };
+  }
+
+  _createClass(GeoCode, [{
+    key: 'geolookup',
+    value: function geolookup(address) {
+      var klass = this.klasses[this.provider];
+      var instance = new klass(this.options);
+      return instance.geolookup(address);
+    }
+  }, {
+    key: 'reverse',
+    value: function reverse(lat, lng) {
+      var klass = this.klasses[this.provider];
+      var instance = new klass(this.options);
+      return instance.reverse(lat, lng);
+    }
+  }]);
+
+  return GeoCode;
+}();
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
-module.exports = __webpack_require__(3);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__providers_bing_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_google_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_open_street_js__ = __webpack_require__(6);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Bing = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-class GeoCode {
+var _util = __webpack_require__(0);
 
-  constructor(provider = 'osm', options = {}) {
-    this.provider = provider;
-    this.options = options;
-    this.klasses = {osm: __WEBPACK_IMPORTED_MODULE_2__providers_open_street_js__["a" /* OpenStreet */], bing: __WEBPACK_IMPORTED_MODULE_0__providers_bing_js__["a" /* Bing */], google: __WEBPACK_IMPORTED_MODULE_1__providers_google_js__["a" /* Google */]};
-  }
-
-  geolookup(address) {
-    let klass = this.klasses[this.provider];
-    let instance = new klass(this.options);
-    return instance.geolookup(address);
-  }
-
-  reverse(lat, lng) {
-    let klass = this.klasses[this.provider];
-    let instance = new klass(this.options);
-    return instance.reverse(lat, lng);
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["GeoCode"] = GeoCode;
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__);
-
-
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Bing geolookup / reverse lookup
  */
-class Bing {
+var Bing = exports.Bing = function () {
+  function Bing(options) {
+    _classCallCheck(this, Bing);
 
-  constructor(options) {
     this.options = options || {};
   }
 
-  geolookup(address) {
-    let url = 'https://dev.virtualearth.net/REST/v1/Locations';
-    let params = {
-      query: address,
-      key: this.options.key,
-      includeNeighborhood: this.options.includeNeighborhood || 0,
-      maxResults: this.options.maxResults || 10
-    };
+  _createClass(Bing, [{
+    key: 'geolookup',
+    value: function geolookup(address) {
+      var _this = this;
 
-    return fetch(`${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`)
-      .then(resp => resp.json())
-      .then(json => this._handleResponse(json))
-  }
+      var url = 'https://dev.virtualearth.net/REST/v1/Locations';
+      var params = {
+        query: address,
+        key: this.options.key,
+        includeNeighborhood: this.options.includeNeighborhood || 0,
+        maxResults: this.options.maxResults || 10
+      };
 
-  reverse(lat, lng) {
-    let url = 
-      `http://dev.virtualearth.net/REST/v1/Locations/${lat},${lng}`;
-    let params = {
-      includeNeighborhood: this.options.includeNeighborhood || 0,
-      key: this.options.key
-    };
+      return fetch(url + '?' + (0, _util.serialize)(params)).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return _this._handleResponse(json);
+      });
+    }
+  }, {
+    key: 'reverse',
+    value: function reverse(lat, lng) {
+      var url = 'http://dev.virtualearth.net/REST/v1/Locations/' + lat + ',' + lng;
+      var params = {
+        includeNeighborhood: this.options.includeNeighborhood || 0,
+        key: this.options.key
+      };
 
-    return fetch(`${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`)
-      .then(resp => resp.json())
-      .then(json => {
-        let address = json['resourceSets'][0]['resources'][0]['name'];
+      return fetch(url + '?' + (0, _util.serialize)(params)).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        var address = json['resourceSets'][0]['resources'][0]['name'];
         return {
           source: 'Bing',
           address: address,
           raw: json
         };
       });
-  }
+    }
+  }, {
+    key: '_handleResponse',
+    value: function _handleResponse(json) {
+      var results = json['resourceSets'][0]['resources'];
+      return results.map(function (result) {
+        return {
+          source: 'Bing',
+          lng: parseFloat(result.point.coordinates[1]),
+          lat: parseFloat(result.point.coordinates[0]),
+          address: {
+            name: result.name
+          },
+          formatted: result.address.formattedAddress,
+          raw: result
+        };
+      });
+    }
+  }]);
 
-  _handleResponse(json) {
-    let results = json['resourceSets'][0]['resources'];
-    return results.map(result => {
-      return {
-        source: 'Bing',
-        lng: parseFloat(result.point.coordinates[1]),
-        lat: parseFloat(result.point.coordinates[0]),
-        address: {
-          name: result.name
-        },
-        formatted: result.address.formattedAddress,
-        raw: result
-      };
-    });
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Bing;
-
- 
+  return Bing;
+}();
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Google = undefined;
 
-class Google {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  constructor(options) {
+var _util = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Google = exports.Google = function () {
+  function Google(options) {
+    _classCallCheck(this, Google);
+
     this.options = options || {};
   }
 
-  geolookup(address) {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json';
-    let params = {
-      address: address,
-      key: this.options.key,
-      language: this.options.lang || 'en-US'
-    };
-    url = `${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`
+  _createClass(Google, [{
+    key: 'geolookup',
+    value: function geolookup(address) {
+      var _this = this;
 
-    return fetch(url)
-      .then(resp => resp.json())
-      .then(json => this._handleResponse(json))
-  }
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json';
+      var params = {
+        address: address,
+        key: this.options.key,
+        language: this.options.lang || 'en-US'
+      };
+      url = url + '?' + (0, _util.serialize)(params);
 
-  reverse(lat, lng) {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json';
-    let params = {
-      latlng: `${lat},${lng}`,
-      key: this.options.key,
-      language: this.options.lang || 'en-US'
-    };
+      return fetch(url).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return _this._handleResponse(json);
+      });
+    }
+  }, {
+    key: 'reverse',
+    value: function reverse(lat, lng) {
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json';
+      var params = {
+        latlng: lat + ',' + lng,
+        key: this.options.key,
+        language: this.options.lang || 'en-US'
+      };
 
-    return fetch(`${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`)
-      .then(resp => resp.json())
-      .then(json => {
+      return fetch(url + '?' + (0, _util.serialize)(params)).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
         return {
           source: 'Google',
           address: json['results'][0]['formatted_address'],
           raw: json
-        }
-      })
-  }
+        };
+      });
+    }
+  }, {
+    key: '_handleResponse',
+    value: function _handleResponse(json) {
+      var results = json.results && json.results.length ? json.results : undefined;
+      if (results) {
+        /*
+         * @param {Array} details - address_components
+         */
+        var getDetails = function getDetails(details) {
+          var name = void 0,
+              road = void 0,
+              postcode = void 0,
+              city = void 0,
+              state = void 0,
+              country = void 0;
+          var anyMatchInArray = function anyMatchInArray(source, target) {
+            return source.some(function (each) {
+              return target.indexOf(each) >= 0;
+            });
+          };
 
-  _handleResponse(json) {
-    let results = json.results && json.results.length ? json.results : undefined;
-    if (results) {
-      /*
-       * @param {Array} details - address_components
-       */
-      const getDetails = function(details) {
-        let name, road, postcode, city, state, country;
-        let anyMatchInArray = function(source, target) {
-          return source.some(each => target.indexOf(each) >= 0);
+          details.forEach(function (detail) {
+            if (anyMatchInArray(detail.types, ['point_of_interest', 'establishment', 'natural_feature', 'airport'])) {
+              name = detail.long_name;
+            } else if (anyMatchInArray(detail.types, ['street_address', 'route', 'sublocality_level_5', 'intersection'])) {
+              road = detail.long_name;
+            } else if (anyMatchInArray(detail.types, ['postal_code'])) {
+              postcode = detail.long_name;
+            } else if (anyMatchInArray(detail.types, ['locality'])) {
+              city = detail.long_name;
+            } else if (anyMatchInArray(detail.types, ['administrative_area_level_1'])) {
+              state = detail.long_name;
+            } else if (anyMatchInArray(detail.types, ['country'])) {
+              country = detail.long_name;
+            }
+          });
+
+          if (name || road || postcode || city || state || country) {
+            return { name: name, road: road, postcode: postcode, city: city, state: state, country: country };
+          } else {
+            return null;
+          }
         };
 
-        details.forEach(detail => {
-          if (anyMatchInArray(detail.types, [ 'point_of_interest', 'establishment', 'natural_feature', 'airport' ])) {
-            name = detail.long_name;
-          } else if (anyMatchInArray(detail.types, ['street_address', 'route', 'sublocality_level_5', 'intersection'])) {
-            road = detail.long_name;
-          } else if (anyMatchInArray(detail.types, ['postal_code'])) {
-            postcode = detail.long_name;
-          } else if (anyMatchInArray(detail.types, ['locality'])) {
-            city = detail.long_name;
-          } else if (anyMatchInArray(detail.types, ['administrative_area_level_1'])) {
-            state = detail.long_name;
-          } else if (anyMatchInArray(detail.types, ['country'])) {
-            country = detail.long_name;
+        var array = [];
+
+        results.forEach(function (result) {
+          var details = getDetails(result.address_components);
+
+          if (details) {
+            array.push({
+              source: 'Google',
+              lng: parseFloat(result.geometry.location.lng),
+              lat: parseFloat(result.geometry.location.lat),
+              address: {
+                name: details.name || '',
+                postalCode: details.postcode || '',
+                road: details.road || '',
+                city: details.city || '',
+                state: details.state || '',
+                country: details.country || ''
+              },
+              formatted: result.formatted_address,
+              raw: result
+            });
           }
         });
 
-        if (name || road || postcode || city || state || country) {
-          return {name, road, postcode, city, state, country};
-        } else {
-          return null;
-        }
-      };
-
-      let array = [];
-
-      results.forEach(result => {
-        let details = getDetails(result.address_components);
-
-        if (details) {
-          array.push({
-            source: 'Google',
-            lng: parseFloat(result.geometry.location.lng),
-            lat: parseFloat(result.geometry.location.lat),
-            address: {
-              name: details.name || '',
-              postalCode: details.postcode || '',
-              road: details.road || '',
-              city: details.city || '',
-              state: details.state || '',
-              country: details.country || ''
-            },
-            formatted: result.formatted_address,
-            raw: result
-          });
-        }
-      });
-
-      return array;
-    } else {
-      throw "Invalid response" + json;
+        return array;
+      } else {
+        throw "Invalid response" + json;
+      }
     }
+  }]);
 
-  }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Google;
-
+  return Google;
+}();
 
 /***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_whatwg_fetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_whatwg_fetch__);
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.OpenStreet = undefined;
 
-class OpenStreet {
-  
-  constructor(options) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _util = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var OpenStreet = exports.OpenStreet = function () {
+  function OpenStreet(options) {
+    _classCallCheck(this, OpenStreet);
+
     this.options = options || {};
   }
 
-  geolookup(address) {
-    let url = 'https://nominatim.openstreetmap.org/search/';
-    let params = {
-      q: address,
-      format: 'json',
-      addressdetails: 1,
-      limit: this.options.limit || 10,
-      countrycodes: this.options.countrycodes || '',
-      'accept-language': this.options.lang || 'en-US'
-    };
-    url = `${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`
+  _createClass(OpenStreet, [{
+    key: 'geolookup',
+    value: function geolookup(address) {
+      var url = 'https://nominatim.openstreetmap.org/search/';
+      var params = {
+        q: address,
+        format: 'json',
+        addressdetails: 1,
+        limit: this.options.limit || 10,
+        countrycodes: this.options.countrycodes || '',
+        'accept-language': this.options.lang || 'en-US'
+      };
+      url = url + '?' + (0, _util.serialize)(params);
 
-    return fetch(url)
-      .then(resp => resp.json())
-      .then(json => 
-        json['map'](result => {
+      return fetch(url).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return json['map'](function (result) {
           return {
             source: 'OpenStreetMap',
             lng: parseFloat(result.lon),
@@ -382,38 +434,38 @@ class OpenStreet {
             },
             formatted: result.display_name,
             raw: result
-          }
-        })
-      );
-  }
+          };
+        });
+      });
+    }
+  }, {
+    key: 'reverse',
+    value: function reverse(lat, lng) {
+      var url = 'https://nominatim.openstreetmap.org/reverse';
+      var params = {
+        format: 'json',
+        lat: lat,
+        lon: lng,
+        zoom: this.options.zoom || 18,
+        addressdetails: this.options.addressdetail || 1,
+        'accept-language': this.options.lang || 'en-US'
+      };
+      url = url + '?' + (0, _util.serialize)(params);
 
-  reverse(lat, lng) {
-    let url = 'https://nominatim.openstreetmap.org/reverse';
-    let params = {
-      format: 'json',
-      lat: lat,
-      lon: lng,
-      zoom: this.options.zoom || 18,
-      addressdetails: this.options.addressdetail || 1,
-      'accept-language': this.options.lang || 'en-US'
-    };
-    url = `${url}?${Object(__WEBPACK_IMPORTED_MODULE_0__util_js__["a" /* serialize */])(params)}`
+      return fetch(url).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return {
+          source: 'OpenStreetMap',
+          address: json['display_name'],
+          raw: json
+        };
+      });
+    }
+  }]);
 
-    return fetch(url)
-      .then(resp => resp.json())
-      .then(json => {
-          return {
-            source: 'OpenStreetMap',
-            address: json['display_name'],
-            raw: json
-          }
-        }
-      );
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = OpenStreet;
-
-
+  return OpenStreet;
+}();
 
 /***/ })
 /******/ ]);
