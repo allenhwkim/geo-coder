@@ -2,10 +2,17 @@ import {serialize} from './util.js';
 
 export class Google {
 
+  /**
+   * @param {object} options options for Google geo lookup. e.g. `{key: XXXXX, language: 'en-US'}`
+   */
   constructor(options) {
     this.options = options || {};
   }
 
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
   geolookup(address) {
     let url = 'https://maps.googleapis.com/maps/api/geocode/json';
     let params = {
@@ -20,6 +27,11 @@ export class Google {
       .then(json => this._handleResponse(json))
   }
 
+  /**
+   * @param {number} lat, latitude
+   * @param {number} lng, longitude
+   * @returns {Promise} with an object format when successful
+   */
   reverse(lat, lng) {
     let url = 'https://maps.googleapis.com/maps/api/geocode/json';
     let params = {

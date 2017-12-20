@@ -9,7 +9,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "min-js": "uglifyjs dist/geoCode.umd.js -c > dist/geoCode.umd.min.js",
     "build": "npm-run-all clean webpack min-js",
-    "doc": "jsdoc2md src/**/*.js > DOC-GENERATED.md",
+    "doc": "jsdoc2md src/*.js src/*/*.js > API.md",
     "build-and-publish": "npm run build && npm version patch && npm publish --access=public",
     "test": "jest"
   },

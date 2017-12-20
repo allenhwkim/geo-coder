@@ -1,14 +1,18 @@
 import {serialize, jsonp} from './util.js';
 
-/**
- * Bing geolookup / reverse lookup
- */
 export class Bing {
 
+  /**
+   * @param {object} options options for Bing geo lookup. e.g. `{key: XXXXX, includeNeighbourhood: 1, maxResult: 50}`
+   */
   constructor(options) {
     this.options = options || {};
   }
 
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
   geolookup(address) {
     let url = 'https://dev.virtualearth.net/REST/v1/Locations';
     let params = {
@@ -23,6 +27,11 @@ export class Bing {
       .then(json => this._handleResponse(json))
   }
 
+  /**
+   * @param {number} lat, latitude
+   * @param {number} lng, longitude
+   * @returns {Promise} with an object format when successful
+   */
   reverse(lat, lng) {
     let url = 
       `http://dev.virtualearth.net/REST/v1/Locations/${lat},${lng}`;
