@@ -43,7 +43,9 @@ Add the library
 
     <script src="https://unpkg.com/geo-coder"></script>
 
-### Example
+### Examples
+
+## Default - OpenStreetMap
 
     var geoCode = new GeoCode();
 
@@ -56,6 +58,11 @@ Add the library
     geoCode.reverse(43.653226, -79.3831843).then(result => {
       console.log(result);
     });
+
+## Google or Bing (keys required)
+
+    var googleGeoCode = new GeoCode('google', { key: 'g0o...' });
+    var bingGeoCode   = new GeoCode('bing',   { key: 'b1n...' });
 
 ## NOTE
 
