@@ -48,7 +48,7 @@ it('#reverse / bing', done => {
   })
 });
 
-it('#geolookup / ging', done => {
+it('#geolookup / bing', done => {
   let key='AjOGMGb_zZWTtds4MsziENAMwak-L3JM78vIfyI9oDDYtw7tk5-kHHJyLfy8CUjo';
   let geoCode = new GeoCode('bing', {key});
   return geoCode.geolookup('brampton on').then(result => {
