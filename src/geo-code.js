@@ -1,17 +1,18 @@
 import { Bing } from './providers/bing.js';
 import { Google } from './providers/google.js';
 import { OpenStreet } from './providers/open-street.js';
+import { OpenCage } from './providers/opencage.js';
 
 export class GeoCode {
 
   /**
-   * @param {string} provider. default 'osm'. 'osm', 'google', or 'bing'
-   * @param {object} options for each provider. api key as in 'key' is required for 'google',  or 'bing'
+   * @param {string} provider. default 'osm'. 'osm', 'google', 'bing', or 'opencage'
+   * @param {object} options for each provider. api key as in 'key' is required for 'google', 'bing' and 'opencage'
    */
   constructor(provider = 'osm', options = {}) {
     this.provider = provider;
     this.options = options;
-    this.klasses = {osm: OpenStreet, bing: Bing, google: Google};
+    this.klasses = {osm: OpenStreet, bing: Bing, google: Google, opencage: OpenCage};
   }
 
   /**
