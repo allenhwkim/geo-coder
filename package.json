@@ -1,7 +1,7 @@
 {
   "name": "geo-coder",
   "version": "1.0.2",
-  "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing",
+  "description": "address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, Bing, and OpenCage",
   "main": "dist/geoCode.umd.min.js",
   "module": "src/geo-code.js",
   "scripts": {
@@ -27,7 +27,8 @@
     "geocode",
     "bing",
     "OpenStreet",
-    "map"
+    "map",
+    "opencage"
   ],
   "files": [
     "dist",
