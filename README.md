@@ -2,7 +2,7 @@
 Geocoder
 ---------
 
-Address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, and Bing
+Address lookup/autocomplete/reverse-geolookup for Google, OpenStreet, Bing, and OpenCage.
 
 [![Build Status](https://travis-ci.org/allenhwkim/geo-coder.svg?branch=master)](https://travis-ci.org/allenhwkim/geo-coder)
 
@@ -61,8 +61,9 @@ Add the library
 
 ## Google or Bing (keys required)
 
-    var googleGeoCode = new GeoCode('google', { key: 'g0o...' });
-    var bingGeoCode   = new GeoCode('bing',   { key: 'b1n...' });
+    var googleGeoCode   = new GeoCode('google', { key: 'g0o...' });
+    var bingGeoCode     = new GeoCode('bing',   { key: 'b1n...' });
+    var opencageGeoCode = new GeoCode('bing',   { key: 'op3...' });
 
 ## NOTE
 
@@ -71,3 +72,5 @@ An API key is required for the following providers.
 Google: https://developers.google.com/maps/documentation/javascript/get-api-key
 
 Bing: https://msdn.microsoft.com/en-us/library/ff428642.aspx
+
+OpenCage: https://geocoder.opencagedata.com
