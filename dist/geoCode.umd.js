@@ -7,7 +7,7 @@
 		exports["geoCode"] = factory();
 	else
 		root["geoCode"] = factory();
-})(this, function() {
+})(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -113,9 +113,16 @@ var _google = __webpack_require__(3);
 
 var _openStreet = __webpack_require__(4);
 
+var _opencage = __webpack_require__(5);
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GeoCode = exports.GeoCode = function () {
+
+  /**
+   * @param {string} provider. default 'osm'. 'osm', 'google', 'bing', or 'opencage'
+   * @param {object} options for each provider. api key as in 'key' is required for 'google', 'bing' and 'opencage'
+   */
   function GeoCode() {
     var provider = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'osm';
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -124,8 +131,14 @@ var GeoCode = exports.GeoCode = function () {
 
     this.provider = provider;
     this.options = options;
-    this.klasses = { osm: _openStreet.OpenStreet, bing: _bing.Bing, google: _google.Google };
+    this.klasses = { osm: _openStreet.OpenStreet, bing: _bing.Bing, google: _google.Google, opencage: _opencage.OpenCage };
   }
+
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
+
 
   _createClass(GeoCode, [{
     key: 'geolookup',
@@ -134,6 +147,13 @@ var GeoCode = exports.GeoCode = function () {
       var instance = new klass(this.options);
       return instance.geolookup(address);
     }
+
+    /**
+     * @param {number} lat, latitude
+     * @param {number} lng, latitude
+     * @returns {Promise} with an object format when successful
+     */
+
   }, {
     key: 'reverse',
     value: function reverse(lat, lng) {
@@ -166,15 +186,22 @@ var _util = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/**
- * Bing geolookup / reverse lookup
- */
 var Bing = exports.Bing = function () {
+
+  /**
+   * @param {object} options options for Bing geo lookup. e.g. `{key: XXXXX, includeNeighbourhood: 1, maxResult: 50}`
+   */
   function Bing(options) {
     _classCallCheck(this, Bing);
 
     this.options = options || {};
   }
+
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
+
 
   _createClass(Bing, [{
     key: 'geolookup',
@@ -195,6 +222,13 @@ var Bing = exports.Bing = function () {
         return _this._handleResponse(json);
       });
     }
+
+    /**
+     * @param {number} lat, latitude
+     * @param {number} lng, longitude
+     * @returns {Promise} with an object format when successful
+     */
+
   }, {
     key: 'reverse',
     value: function reverse(lat, lng) {
@@ -256,11 +290,21 @@ var _util = __webpack_require__(0);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Google = exports.Google = function () {
+
+  /**
+   * @param {object} options options for Google geo lookup. e.g. `{key: XXXXX, language: 'en-US'}`
+   */
   function Google(options) {
     _classCallCheck(this, Google);
 
     this.options = options || {};
   }
+
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
+
 
   _createClass(Google, [{
     key: 'geolookup',
@@ -281,6 +325,13 @@ var Google = exports.Google = function () {
         return _this._handleResponse(json);
       });
     }
+
+    /**
+     * @param {number} lat, latitude
+     * @param {number} lng, longitude
+     * @returns {Promise} with an object format when successful
+     */
+
   }, {
     key: 'reverse',
     value: function reverse(lat, lng) {
@@ -398,15 +449,28 @@ var _util = __webpack_require__(0);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var OpenStreet = exports.OpenStreet = function () {
+
+  /**
+   * @param {object} options options for OpenStreet geo lookup.
+   *   `e.g. {key: XXXXX, limit: 15, zoom: 18, addressdetail: 1, lang: 'en-US'}`
+   */
   function OpenStreet(options) {
     _classCallCheck(this, OpenStreet);
 
     this.options = options || {};
   }
 
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
+
+
   _createClass(OpenStreet, [{
     key: 'geolookup',
     value: function geolookup(address) {
+      var _this = this;
+
       var url = 'https://nominatim.openstreetmap.org/search/';
       var params = {
         q: address,
@@ -421,25 +485,16 @@ var OpenStreet = exports.OpenStreet = function () {
       return fetch(url).then(function (resp) {
         return resp.json();
       }).then(function (json) {
-        return json['map'](function (result) {
-          return {
-            source: 'OpenStreetMap',
-            lng: parseFloat(result.lon),
-            lat: parseFloat(result.lat),
-            address: {
-              name: result.address.neighbourhood || '',
-              road: result.address.road || '',
-              postalCode: result.address.postcode,
-              city: result.address.city || result.address.town,
-              state: result.address.state,
-              country: result.address.country
-            },
-            formatted: result.display_name,
-            raw: result
-          };
-        });
+        return _this._handleResponse(json);
       });
     }
+
+    /**
+     * @param {number} lat, latitude
+     * @param {number} lng, latitude
+     * @returns {Promise} with an object format when successful
+     */
+
   }, {
     key: 'reverse',
     value: function reverse(lat, lng) {
@@ -464,9 +519,140 @@ var OpenStreet = exports.OpenStreet = function () {
         };
       });
     }
+  }, {
+    key: '_handleResponse',
+    value: function _handleResponse(json) {
+      return json.map(function (result) {
+        return {
+          source: 'OpenStreetMap',
+          lng: parseFloat(result.lon),
+          lat: parseFloat(result.lat),
+          address: {
+            name: result.address.neighbourhood || '',
+            road: result.address.road || '',
+            postalCode: result.address.postcode,
+            city: result.address.city || result.address.town,
+            state: result.address.state,
+            country: result.address.country
+          },
+          formatted: result.display_name,
+          raw: result
+        };
+      });
+    }
   }]);
 
   return OpenStreet;
+}();
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.OpenCage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _util = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var OpenCage = exports.OpenCage = function () {
+
+  /**
+   * @param {object} options options for OpenCage geo lookup. e.g. `{key: XXXXX, language: 'en-US'}`
+   */
+  function OpenCage(options) {
+    _classCallCheck(this, OpenCage);
+
+    this.options = options || {};
+  }
+
+  /**
+   * @param {string} address. e.g. 'brampton, on'
+   * @returns {Promise} with an array format when successful
+   */
+
+
+  _createClass(OpenCage, [{
+    key: 'geolookup',
+    value: function geolookup(address) {
+      var _this = this;
+
+      var url = 'https://api.opencagedata.com/geocode/v1/json';
+      var params = {
+        q: address,
+        key: this.options.key,
+        language: this.options.lang || 'en-US'
+      };
+      url = url + '?' + (0, _util.serialize)(params);
+
+      return fetch(url).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return _this._handleResponse(json);
+      });
+    }
+
+    /**
+     * @param {number} lat, latitude
+     * @param {number} lng, longitude
+     * @returns {Promise} with an object format when successful
+     */
+
+  }, {
+    key: 'reverse',
+    value: function reverse(lat, lng) {
+      var url = 'https://api.opencagedata.com/geocode/v1/json';
+      var params = {
+        q: lat + ',' + lng,
+        key: this.options.key,
+        language: this.options.lang || 'en-US'
+      };
+
+      return fetch(url + '?' + (0, _util.serialize)(params)).then(function (resp) {
+        return resp.json();
+      }).then(function (json) {
+        return {
+          source: 'OpenCage',
+          address: json['results'][0]['formatted'],
+          raw: json
+        };
+      });
+    }
+  }, {
+    key: '_handleResponse',
+    value: function _handleResponse(json) {
+      var results = json.results && json.results.length ? json.results : undefined;
+
+      if (results) {
+        var array = [];
+
+        results.forEach(function (result) {
+          array.push({
+            source: 'OpenCage',
+            lng: parseFloat(result.geometry.lng),
+            lat: parseFloat(result.geometry.lat),
+            address: results.components,
+            formatted: result.formatted,
+            raw: result
+          });
+        });
+
+        return array;
+      } else {
+        throw "Invalid response" + json;
+      }
+    }
+  }]);
+
+  return OpenCage;
 }();
 
 /***/ })
