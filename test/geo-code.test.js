@@ -48,7 +48,7 @@ it('#reverse / bing', done => {
   })
 });
 
-it('#geolookup / ging', done => {
+it('#geolookup / bing', done => {
   let key='AjOGMGb_zZWTtds4MsziENAMwak-L3JM78vIfyI9oDDYtw7tk5-kHHJyLfy8CUjo';
   let geoCode = new GeoCode('bing', {key});
   return geoCode.geolookup('brampton on').then(result => {
@@ -57,3 +57,24 @@ it('#geolookup / ging', done => {
     done();
   })
 });
+
+var openCageKey = process.env.OPENCAGE_API_KEY;
+if (openCageKey) {
+  it('#reverse / opencage', done => {
+    let geoCode = new GeoCode('opencage', {key: openCageKey});
+    return geoCode.reverse(43.6843109130859, -79.7587203979492).then(result => {
+      expect(result.source).toBe('OpenCage');
+      expect(result.address).toMatch(/Brampton/);
+      done();
+    })
+  });
+
+  it('#geolookup / opencage', done => {
+    let geoCode = new GeoCode('opencage', {key: openCageKey});
+    return geoCode.geolookup('brampton on').then(result => {
+      expect(result.length).toBeGreaterThan(0);
+      expect(result[0].source).toBe('OpenCage');
+      done();
+    })
+  });
+}

@@ -9,6 +9,8 @@
 <dd></dd>
 <dt><a href="#OpenStreet">OpenStreet</a></dt>
 <dd></dd>
+<dt><a href="#OpenCage">OpenCage</a></dt>
+<dd></dd>
 </dl>
 
 <a name="GeoCode"></a>
@@ -27,8 +29,8 @@
 
 | Param | Type | Description |
 | --- | --- | --- |
-| provider. | <code>string</code> | default 'osm'. 'osm', 'google', or 'bing' |
-| options | <code>object</code> | for each provider. api key as in 'key' is required for 'google',  or 'bing' |
+| provider. | <code>string</code> | default 'osm'. 'osm', 'google', 'bing', 'opencage' |
+| options | <code>object</code> | for each provider. api key as in 'key' is required for 'google', 'bing' and 'opencage' |
 
 <a name="GeoCode+geolookup"></a>
 
@@ -162,6 +164,45 @@
 ### openStreet.reverse(lat,, lng,) ⇒ <code>Promise</code>
 **Kind**: instance method of [<code>OpenStreet</code>](#OpenStreet)  
 **Returns**: <code>Promise</code> - with an object format when successful  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| lat, | <code>number</code> | latitude |
+| lng, | <code>number</code> | latitude |
+
+<a name="OpenCage"></a>
+
+## OpenCage
+**Kind**: global class
+
+* [OpenCage](#OpenCage)
+    * [new OpenCage(options)](#new_OpenCage_new)
+    * [.geolookup()](#OpenCage+geolookup) ⇒ <code>Promise</code>
+    * [.reverse(lat,, lng,)](#OpenCage+reverse) ⇒ <code>Promise</code>
+
+<a name="new_OpenCage_new"></a>
+
+### new OpenCage(options)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | options for OpenCage geo lookup. `e.g. {key: XXXXX, lang: 'en-US'}` |
+
+<a name="OpenCage+geolookup"></a>
+
+### openStreet.geolookup() ⇒ <code>Promise</code>
+**Kind**: instance method of [<code>OpenCage</code>](#OpenCage)
+**Returns**: <code>Promise</code> - with an array format when successful
+
+| Param | Type | Description |
+| --- | --- | --- |
+| address. | <code>string</code> | e.g. 'brampton, on' |
+
+<a name="OpenCage+reverse"></a>
+
+### openStreet.reverse(lat, lng) ⇒ <code>Promise</code>
+**Kind**: instance method of [<code>OpenCage</code>](#OpenCage)
+**Returns**: <code>Promise</code> - with an object format when successful
 
 | Param | Type | Description |
 | --- | --- | --- |
