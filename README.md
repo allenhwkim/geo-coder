@@ -59,11 +59,11 @@ Add the library
       console.log(result);
     });
 
-## Google or Bing (keys required)
+## Google, Bing, OpenCage (keys required)
 
     var googleGeoCode   = new GeoCode('google', { key: 'g0o...' });
     var bingGeoCode     = new GeoCode('bing',   { key: 'b1n...' });
-    var opencageGeoCode = new GeoCode('bing',   { key: 'op3...' });
+    var opencageGeoCode = new GeoCode('opencage',   { key: 'op3...' });
 
 ## NOTE
 
