@@ -22,6 +22,7 @@ export class OpenStreet {
       addressdetails: 1,
       limit: this.options.limit || 10,
       countrycodes: this.options.countrycodes || '',
+      featuretype: this.options.featuretype || '',
       'accept-language': this.options.lang || 'en-US'
     };
     url = `${url}?${serialize(params)}`
